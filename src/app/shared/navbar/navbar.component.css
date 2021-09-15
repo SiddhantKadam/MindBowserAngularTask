@@ -1,0 +1,9 @@
+.navbar-collapse
+{
+    justify-content: end;
+}
+
+.nav-link
+{
+    cursor: pointer;
+}

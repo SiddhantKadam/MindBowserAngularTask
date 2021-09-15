@@ -1,0 +1,12 @@
+.card-header button {
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
+.card-header .add-btn {
+  float: right;
+}
+
+.card-header .heading-span {
+  vertical-align: sub;
+}

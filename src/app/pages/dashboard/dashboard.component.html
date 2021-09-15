@@ -1,0 +1,185 @@
+<form class="form-horizontal" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header bg-success text-white">
+        <h5><span class="pt-3 heading-span">Employee Master</span><span class="add-btn"><button type="button"
+              class="btn" (click)="open(mymodal)"><i class="fa fa-plus text-white" aria-hidden="true"></i>
+            </button></span></h5>
+      </div>
+      <div class="card-body p-0">
+
+        <!-- == Table == -->
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Sr. No.</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Birth Date</th>
+                <th>Mobile</th>
+                <th>City</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let obj of getAllEmployeeList; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{obj.employeeFName}}</td>
+                <td>{{obj.employeeLName}}</td>
+                <td>{{obj.employeeAddress}}</td>
+                <td>{{obj.employeeDOB}}</td>
+                <td>{{obj.employeeContactNo}}</td>
+                <td>{{obj.employeeCity}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" (click)="getById(obj.id,mymodal)"><i
+                      class="fa fa-pencil-square-o" aria-hidden="true"></i> </button>
+                  <button type="button" class="btn btn-primary ml-2" (click)="deletePopup(mymodal2)"><i
+                      class="fa fa-trash" aria-hidden="true"></i> </button>
+                </td>
+
+                <!-- == Delete Confirmation Popup == -->
+                <ng-template #mymodal2 let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Delete Employee</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <h4 class="text-center">Are you sure ?</h4>
+                    <div class="row mt-4">
+                      <div class="col-md-6 text-center">
+                        <button class="btn btn-success w-50" (click)="deleteEmployee(obj.id,mymodal2)">Yes</button>
+                      </div>
+                      <div class="col-md-6 text-center">
+                        <button class="btn btn-success w-50" (click)="modal.dismiss('Cross click')">No</button>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- == Pagination == -->
+          <div class="d-flex justify-content-end">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- == Add Employee Modal Form == -->
+  <ng-template #mymodal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Employee</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <input placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && f.employeeFName.errors }"
+            [(ngModel)]="employeeModel.employeeFName" formControlName="employeeFName" autocomplete="off"
+            class="form-control">
+          <div *ngIf="submitted && f.employeeFName.errors" class="invalid-feedback">
+            <div *ngIf="f.employeeFName.errors.required">First Name is required</div>
+            <div *ngIf="f.employeeFName.errors.pattern">Please, Enter valid pattern</div>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <div>
+            <input placeholder="Last Name" [(ngModel)]="employeeModel.employeeLName" formControlName="employeeLName"
+              autocomplete="off" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.employeeLName.errors }">
+            <div *ngIf="submitted && f.employeeLName.errors" class="invalid-feedback">
+              <div *ngIf="f.employeeLName.errors.required">Last Name is required</div>
+              <div *ngIf="f.employeeLName.errors.pattern">Please, Enter valid pattern</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div>
+            <textarea placeholder="Address" [(ngModel)]="employeeModel.employeeAddress"
+              formControlName="employeeAddress" autocomplete="off" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f.employeeAddress.errors }"></textarea>
+            <div *ngIf="submitted && f.employeeAddress.errors" class="invalid-feedback">
+              <div *ngIf="f.employeeAddress.errors.required">Address is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <input type="date" placeholder="Birthday" [ngClass]="{ 'is-invalid': submitted && f.employeeDOB.errors }"
+            [(ngModel)]="employeeModel.employeeDOB" formControlName="employeeDOB" autocomplete="off"
+            class="form-control">
+          <div *ngIf="submitted && f.employeeDOB.errors" class="invalid-feedback">
+            <div *ngIf="f.employeeDOB.errors.required">Date of Birth is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <input placeholder="Contact Number" [ngClass]="{ 'is-invalid': submitted && f.employeeContactNo.errors }"
+            [(ngModel)]="employeeModel.employeeContactNo" formControlName="employeeContactNo" autocomplete="off"
+            class="form-control">
+          <div *ngIf="submitted && f.employeeContactNo.errors" class="invalid-feedback">
+            <div *ngIf="f.employeeContactNo.errors.required">Mobile Number is required</div>
+            <div *ngIf="f.employeeContactNo.errors.minlength">Please, Enter minimum 10 characters</div>
+            <div *ngIf="f.employeeContactNo.errors.maxlength">Please, Enter maximum 10 characters</div>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <div>
+            <input placeholder="City" [(ngModel)]="employeeModel.employeeCity" formControlName="employeeCity"
+              autocomplete="off" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.employeeCity.errors }">
+            <div *ngIf="submitted && f.employeeCity.errors" class="invalid-feedback">
+              <div *ngIf="f.employeeCity.errors.required">Last Name is required</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class=" col-md-12 text-center">
+        <button class="glassBtn" type="submit" (click)="onSubmit()">SignUp</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- == Chart.js == -->
+  <div class="container mt-5">
+    <h5>Additional Task, Integrate third party API</h5>
+    <div class="card">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div class="chart-wrapper">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+              [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+            </canvas>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div class="chart-wrapper">
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+              [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</form>

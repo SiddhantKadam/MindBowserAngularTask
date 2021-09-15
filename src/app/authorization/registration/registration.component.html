@@ -1,0 +1,99 @@
+<form class="form-horizontal" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+
+  <div id="login" autocomplete="off">
+    <div class="col-md-6 m-3 glass">
+      <div class="welcomeHeader bg-success mt-3">
+        <div class="row">
+          <div class="col-md-12 p-2 text-center">
+            <h2>SIGNUP</h2>
+            <h4>Signup here & get registered</h4>
+          </div>
+        </div>
+      </div>
+      <hr style="border-top: 2px solid #000;">
+      <hr class="mt-0" style="border: 2px solid #fff">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div>
+            <input placeholder="Email ID" [(ngModel)]="registrationModel.registrationMail"
+              formControlName="registrationMail" autocomplete="off" class="form-control mb-0"
+              [ngClass]="{ 'is-invalid': submitted && f.registrationMail.errors }">
+            <div *ngIf="submitted && f.registrationMail.errors" class="invalid-feedback">
+              <div *ngIf="f.registrationMail.errors.required">Email is required</div>
+              <div *ngIf="f.registrationMail.errors.email">Please, Enter valid pattern</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <input placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && f.registrationFName.errors }"
+            [(ngModel)]="registrationModel.registrationFName" formControlName="registrationFName" autocomplete="off"
+            class="form-control mb-0">
+          <div *ngIf="submitted && f.registrationFName.errors" class="invalid-feedback">
+            <div *ngIf="f.registrationFName.errors.required">First Name is required</div>
+            <div *ngIf="f.registrationFName.errors.pattern">Please, Enter valid pattern</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div>
+            <input placeholder="Last Name" [(ngModel)]="registrationModel.registrationLName"
+              formControlName="registrationLName" autocomplete="off" class="form-control mb-0"
+              [ngClass]="{ 'is-invalid': submitted && f.registrationLName.errors }">
+            <div *ngIf="submitted && f.registrationLName.errors" class="invalid-feedback">
+              <div *ngIf="f.registrationLName.errors.required">Last Name is required</div>
+              <div *ngIf="f.registrationLName.errors.pattern">Please, Enter valid pattern</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <div>
+            <input type="password" [(ngModel)]="registrationModel.registrationPassword" class="form-control mb-0"
+              formControlName="registrationPassword"
+              [ngClass]="{ 'is-invalid': submitted && f.registrationPassword.errors }" placeholder="Password"
+              [type]="fieldTextType ? 'text' : 'password'">
+            <i class="fa password" [ngClass]="{ 'fa-eye-slash': !fieldTextType, 'fa-eye': fieldTextType}"
+              (click)="toggleFieldTextType()"></i>
+            <div *ngIf="submitted && f.registrationPassword.errors" class="invalid-feedback">
+              <div *ngIf="f.registrationPassword.errors.required">Password is required</div>
+              <div *ngIf="f.registrationPassword.errors.minlength">Please, Enter minimum 8 characters</div>
+              <div *ngIf="f.registrationPassword.errors.maxlength">Please, Enter maximum 15 characters</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <div>
+            <textarea placeholder="Address" [(ngModel)]="registrationModel.registrationAddress"
+              formControlName="registrationAddress" autocomplete="off" class="form-control mb-0"
+              [ngClass]="{ 'is-invalid': submitted && f.registrationAddress.errors }"></textarea>
+            <div *ngIf="submitted && f.registrationAddress.errors" class="invalid-feedback">
+              <div *ngIf="f.registrationAddress.errors.required">Address is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 form-group">
+          <input type="date" placeholder="Birthday" [ngClass]="{ 'is-invalid': submitted && f.registrationDOB.errors }"
+            [(ngModel)]="registrationModel.registrationDOB" formControlName="registrationDOB" autocomplete="off"
+            class="form-control mb-0">
+          <div *ngIf="submitted && f.registrationDOB.errors" class="invalid-feedback">
+            <div *ngIf="f.registrationDOB.errors.required">Date of Birth is required</div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="col-md-12 text-center">
+        <button class="btn btn-success" type="submit">SignUp</button>
+      </div>
+      <br><br>
+      <span class="account-link text-center">Already have an account ? <span class="color-primary" routerLink=""> Sign
+          In
+          here</span></span>
+    </div>
+  </div>
+
+</form>

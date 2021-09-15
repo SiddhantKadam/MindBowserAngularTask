@@ -1,0 +1,37 @@
+<form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div id="login" autocomplete="off">
+    <div class="glass">
+      <div class="welcomeHeader bg-success text-center">
+        <h1>Welcome</h1>
+        <h3 class="mt-3">Sign In here</h3>
+      </div>
+      <br>
+      <div>
+        <input placeholder="Username" [(ngModel)]="loginModel.registrationMail" formControlName="registrationMail"
+          autocomplete="off" class="form-control mb-0"
+          [ngClass]="{ 'is-invalid': submitted && f.registrationMail.errors }">
+        <div *ngIf="submitted && f.registrationMail.errors" class="invalid-feedback">
+          <div *ngIf="f.registrationMail.errors.required">Username is required</div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <input type="password" autocomplete="new-password" class="form-control mb-0" placeholder="Password"
+          [(ngModel)]="loginModel.registrationPassword" formControlName="registrationPassword"
+          [ngClass]="{ 'is-invalid': submitted && f.registrationPassword.errors }"
+          [type]="fieldTextType ? 'text' : 'password'">
+        <i class="fa password" [ngClass]="{ 'fa-eye-slash': !fieldTextType, 'fa-eye': fieldTextType}"
+          (click)="toggleFieldTextType()"></i>
+
+        <div *ngIf="submitted && f.registrationPassword.errors" class="invalid-feedback">
+          <div *ngIf="f.registrationPassword.errors.required">Password is required</div>
+        </div>
+      </div>
+      <br>
+      <div class="col-md-12 text-center">
+        <button class="btn btn-success" type="submit">Login</button>
+      </div><br>
+      <span class="account-link text-center">Didn't have an account ? <span class="color-primary"
+          routerLink="/registration"> Sign up here</span></span>
+    </div>
+  </div>
+</form>
