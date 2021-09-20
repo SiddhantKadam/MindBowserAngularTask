@@ -1,0 +1,11 @@
+These are the following commands to run the project :
+
+1. ng s - For serve the project.
+2. json-server --watch db.json - For start the JSON SERVER.
+3. Login page use the credientials from db.json
+   Username - Omkar12@gmail.com
+   Password - omkar@123
+4. Register Manager
+5. Add employee with + button on top of the table.
+6. Update & delete records with following action buttons.
+7. Logout using logout button from navbar.

@@ -24,6 +24,7 @@ export class RegistrationComponent implements OnInit {
   confirmPassword: String;
   mailFlag: boolean = false;
   encryptPsw: string;
+  user: string = '1';
 
   constructor(private formBuilder: FormBuilder, private router: Router, private httpService: HttpmethodsService, public toastr: ToastrService) { }
 
@@ -32,11 +33,15 @@ export class RegistrationComponent implements OnInit {
       registrationMail: new FormControl('', [Validators.required, Validators.email]),
       registrationFName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       registrationLName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      registrationPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]),
+      registrationPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
       registrationAddress: new FormControl('', [Validators.required]),
       registrationDOB: new FormControl('', [Validators.required]),
     });
     this.getAllManager();
+  }
+
+  getToday(): string {
+    return new Date().toISOString().split('T')[0]
   }
 
   get f() { return this.registrationForm.controls; }
@@ -70,6 +75,8 @@ export class RegistrationComponent implements OnInit {
     this.registrationModel.registrationPassword = this.encryptPsw;
     this.httpService.postRequest(postRegister, this.registrationModel).subscribe((data: any) => {
       this.toastr.success('Register Succesfully!', 'Success');
+      sessionStorage.setItem("user", this.user);
+      this.router.navigateByUrl("/layout");
     },
       error => {
         this.toastr.error('Register Failed!', 'Error');

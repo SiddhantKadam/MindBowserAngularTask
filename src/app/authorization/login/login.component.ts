@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   fieldTextType: boolean = false;
   submitted = false;
 
-  getAllManagerList : any[];
+  getAllManagerList: any[];
   user: string = '1';
   signInFlag: boolean = false;
   encryptPsw: string;
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
       registrationPassword: new FormControl('', [Validators.required]),
     });
     this.getAllManager();
+    this.onloadLogin();
   }
 
   get f() { return this.loginForm.controls; }
@@ -45,31 +46,37 @@ export class LoginComponent implements OnInit {
     }
 
     // ==== Post Login ====
-    this.encryptPsw=btoa(this.loginModel.registrationPassword); //Ecrypt Password
-    this.loginModel.registrationPassword=this.encryptPsw;
-    for(let i=0; i<this.getAllManagerList.length; i++)
-    {
-       if(this.loginModel.registrationMail == this.getAllManagerList[i].registrationMail && this.loginModel.registrationPassword == this.getAllManagerList[i].registrationPassword) 
-       {
+    this.encryptPsw = btoa(this.loginModel.registrationPassword); //Ecrypt Password
+    this.loginModel.registrationPassword = this.encryptPsw;
+    for (let i = 0; i < this.getAllManagerList.length; i++) {
+      if (this.loginModel.registrationMail == this.getAllManagerList[i].registrationMail && this.loginModel.registrationPassword == this.getAllManagerList[i].registrationPassword) {
         this.toastr.success('Login Succesfully!', 'Success');
         this.signInFlag = true;
-        sessionStorage.setItem("user",this.user);
+        sessionStorage.setItem("user", this.user);
         this.router.navigateByUrl("/layout");
-         break;
-       }
-       else
-       {
-         this.signInFlag = false;
-       }
+        break;
+      }
+      else {
+        this.signInFlag = false;
+      }
     }
     if (this.signInFlag == false) {
       this.toastr.error('Login Failed!', 'Failed');
     }
   }
 
+  // == Onload Login ==
+  onloadLogin() {
+    if (sessionStorage.getItem("user") != null) {
+      this.router.navigateByUrl("/layout");
+    }
+    else {
+      this.router.navigateByUrl("/");
+    }
+  }
+
   // == Get All Manager List ==
-  getAllManager()
-  {
+  getAllManager() {
     this.httpService.getRequest(getManager).subscribe((data: any) => {
       this.getAllManagerList = data;
     });

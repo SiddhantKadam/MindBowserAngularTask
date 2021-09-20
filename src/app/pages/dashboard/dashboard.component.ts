@@ -70,6 +70,10 @@ export class DashboardComponent implements OnInit {
     this.getAll();
   }
 
+  getToday(): string {
+    return new Date().toISOString().split('T')[0]
+ }
+
   get f() { return this.employeeForm.controls; }
 
   // == Save Employee ==

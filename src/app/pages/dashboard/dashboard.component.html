@@ -121,7 +121,7 @@
         </div>
         <div class="col-md-6 form-group">
           <input type="date" placeholder="Birthday" [ngClass]="{ 'is-invalid': submitted && f.employeeDOB.errors }"
-            [(ngModel)]="employeeModel.employeeDOB" formControlName="employeeDOB" autocomplete="off"
+            [(ngModel)]="employeeModel.employeeDOB" [max]="getToday()" formControlName="employeeDOB" autocomplete="off"
             class="form-control">
           <div *ngIf="submitted && f.employeeDOB.errors" class="invalid-feedback">
             <div *ngIf="f.employeeDOB.errors.required">Date of Birth is required</div>
@@ -133,9 +133,9 @@
         <div class="col-md-6 form-group">
           <input placeholder="Contact Number" [ngClass]="{ 'is-invalid': submitted && f.employeeContactNo.errors }"
             [(ngModel)]="employeeModel.employeeContactNo" formControlName="employeeContactNo" autocomplete="off"
-            class="form-control">
+            class="form-control" onkeypress="return event.charCode>=48 && event.charCode <=57" maxlength="10">
           <div *ngIf="submitted && f.employeeContactNo.errors" class="invalid-feedback">
-            <div *ngIf="f.employeeContactNo.errors.required">Mobile Number is required</div>
+            <div *ngIf="f.employeeContactNo.errors.required">Contact Number is required</div>
             <div *ngIf="f.employeeContactNo.errors.minlength">Please, Enter minimum 10 characters</div>
             <div *ngIf="f.employeeContactNo.errors.maxlength">Please, Enter maximum 10 characters</div>
           </div>
@@ -146,14 +146,14 @@
             <input placeholder="City" [(ngModel)]="employeeModel.employeeCity" formControlName="employeeCity"
               autocomplete="off" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.employeeCity.errors }">
             <div *ngIf="submitted && f.employeeCity.errors" class="invalid-feedback">
-              <div *ngIf="f.employeeCity.errors.required">Last Name is required</div>
+              <div *ngIf="f.employeeCity.errors.required">City Name is required</div>
             </div>
           </div>
         </div>
       </div>
       <br>
       <div class=" col-md-12 text-center">
-        <button class="btn btn-success" type="submit" (click)="onSubmit()">SignUp</button>
+        <button class="btn btn-success" type="submit" (click)="onSubmit()">Submit</button>
       </div>
     </div>
   </ng-template>

@@ -3,7 +3,7 @@ export class RegistrationClass {
     registrationMail: String;
     registrationFName: String;
     registrationLName: String;
-    registrationPassword: string;
+    registrationPassword: any;
     registrationAddress: String;
     registrationDOB: String;
 }
